@@ -5,7 +5,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 
 const app = express();
-const server = http.createServer(app);
+const server = http.createServer(app).listen(PORT, '0.0.0.0');
 const io = socketIo(server);
 
 // ... other server setup code
@@ -136,6 +136,6 @@ app.get('/snowReports', async (req, res) => {
 
 //start express.js server
 const PORT = 3000;
-app.listen(PORT, () => {
-console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
 });

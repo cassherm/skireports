@@ -15,7 +15,8 @@ $(document).ready(function() {
     });
 
     // Connect to the Socket.IO server
-    const socket = io('http://localhost:3000');
+    const socket = io.connect('http://http://172.173.176.202/:3000');
+
 
     //having socket issues. trying to debug. this does print that i have a transport error
     //I have no idea how to fix this, I've been trying, and I think it's too late to get help
