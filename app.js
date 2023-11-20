@@ -5,6 +5,8 @@ const http = require('http');
 const socketIo = require('socket.io');
 
 const app = express();
+//unsure if this is the correct way to handle other machines accessing the ip based website. this might
+//be where my deployment was going wrong?
 const server = http.createServer(app).listen(PORT, '0.0.0.0');
 const io = socketIo(server);
 
@@ -47,13 +49,12 @@ async function scrapeSnowReports() {
     // Console log for debugging before starting the scraping process
     // console.log("BEFORE SCRAPE");
 
-    // Add a short delay for debugging purposes, can be helpful during development
-    // This delay is not essential and can be removed if not needed
+    //kept this in case I needed it after debugging 
     await page.waitForTimeout(200);
 
     // Evaluate the page to extract snow report elements
     const snowReports = await page.evaluate(() => {
-        // Query for all snow report elements with the specified classes
+        // grabbing all of the "resort" selectors 
         const snowReportElements = Array.from(document.querySelectorAll('.resort.open, .resort.pto'));
 
         // Map through each snow report element and extract relevant data
@@ -65,9 +66,10 @@ async function scrapeSnowReports() {
             // If titleElement exists, assign its text content to the variable title; otherwise, assign null to title.
             const title = titleElement ? titleElement.innerText : null;
 
-            // Only proceed if the title exists
+            // Only proceed if the title exists. otherwise everything crashes
             if (title !== null) {
                 // Query for the temperature element within the current snow report element
+                //this is how I would handle pulling in any other conditions information for a further developed version
                 const tempElement = element.querySelector('.resort__header-weather-detail-temp');
 
                 // Check if the selector exists before extracting the temperature
@@ -78,11 +80,11 @@ async function scrapeSnowReports() {
                 return {
                     title,
                     temp,
-                    // Add more properties here based on the elements you want to scrape
+                    //TODO add more properties
                 };
             }
 
-            // Skip creating the card for this element if title doesn't exist
+            // Skip creating the card for this element if title doesn't exist so I don't get a card w an ugly undefined msg
             return null;
         }).filter(card => card !== null); // Filter out null entries (elements without the title selector)
     });
@@ -120,7 +122,8 @@ io.on('connection', (socket) => {
 // Route to handle scraping and sending data to the front end
 //don't need an ejs since don't need to visualize anything!
 //this is not strictly necessary since the socket also emits data to the front end,
-//but since I don't have that refreshing constantly this seems smart to have
+//but since I don't have that refreshing constantly this seems smart to have. That and I don't think the socket is working
+//properly at this point due to GET errors in my web console
 app.get('/snowReports', async (req, res) => {
     try {
         //receives the scraped data from the asynch function

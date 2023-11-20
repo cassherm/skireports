@@ -19,7 +19,7 @@ $(document).ready(function() {
 
 
     //having socket issues. trying to debug. this does print that i have a transport error
-    //I have no idea how to fix this, I've been trying, and I think it's too late to get help
+    //I have no idea how to fix this further, I've been trying, and I think it's too late to get help
     //but I'd appreciate some input post grading
     
     socket.on('connect_error', (error) => {
@@ -38,14 +38,14 @@ $(document).ready(function() {
         cardContainer.empty(); // Clear existing cards
 
         data.forEach(report => {
-            // Add more data under the h5 if desired for actual functionality
+            
             const cardElement = `
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">${report.title}</h5>
                             <p class="card-text">Temp: ${report.temp}</p>
-                            <!-- Add more data if functionality to scrape more -->
+                            <!-- TODO Add more data when scraping more things -->
                         </div>
                     </div>
                 </div>
