@@ -1,0 +1,26 @@
+body {
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+.title-header {
+    background-color: #a5c4e4; /* Colorado-themed blue color */
+    color: #ffffff; /* White text color */
+    padding: 1.5rem 0; /* Vertical and horizontal padding */
+    text-align: center; /* Center-align text */
+    position: relative;
+}
+
+
+.alert {
+    margin-top: 2rem; /* Add space between title header and alert */
+}
+
+.card-title {
+    font-weight: bold; /* Bold card titles */
+}
+
+.card {
+    margin-bottom: 1rem; /* Add space between cards */
+}
+
+/*TODO: add spacing above my resorts cards
